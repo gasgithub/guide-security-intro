@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
+import="io.openliberty.guides.ui.*"%>
 <!DOCTYPE html>
 <!--
   Copyright (c) 2018 IBM Corp.
@@ -15,40 +16,17 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<html xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
-  xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-  xmlns:jsf="http://xmlns.jcp.org/jsf"
-  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<html>
 <head>
     <title>Administrator</title>
-    <style>
-      #logoutButton {
-          width: 100%;
-          border-bottom: 1px solid black;
-          margin-bottom: 1em;
-      }
-
-      #logoutButton input {
-          position: absolute;
-          top: 2em;
-          right: 2em;
-      }
-    </style>
 </head>
 <body>
     <h2>Administrator</h2>
-    <h:panelGroup id="logoutButton" layout="block">
         <FORM METHOD="POST" ACTION="ibm_security_logout" NAME="logout">
           <input type="submit" name="logout" value="Log Out" />
           <input type="HIDDEN" name="logoutExitPage" value="/home" />
         </FORM>
-    </h:panelGroup>
-    <h:panelGrid class="table" columns="2" border="3">
-        <h:panelGroup>Username:</h:panelGroup>
-        <h:panelGroup>#{userBean.username}</h:panelGroup>
-        <h:panelGroup>Roles:</h:panelGroup>
-        <h:panelGroup>#{userBean.roles}</h:panelGroup>
-    </h:panelGrid>
+        Username: ${userBean.username} 
+        Roles: ${userBean.roles}
 </body>
 </html>

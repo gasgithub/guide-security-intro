@@ -20,31 +20,24 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.security.enterprise.SecurityContext;
 
-@Named("userBean")
-@RequestScoped
 
 public class UserBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Inject
-    private SecurityContext securityContext;
+    private String username;
+    private String roles = "";
+
+    public UserBean(String u, String r){
+        this.username = u;
+        this.roles = r;
+    }
 
     public String getUsername() {
-        return securityContext.getCallerPrincipal().getName();
+        return username;
     }
 
     public String getRoles() {
-        String roles = "";
-        if (securityContext.isCallerInRole(Utils.ADMIN)) {
-            roles = Utils.ADMIN;
-        }
-        if (securityContext.isCallerInRole(Utils.USER)) {
-            if (!roles.isEmpty()) {
-                roles += ", ";
-            }
-            roles += Utils.USER;
-        }
         return roles;
     }
 }

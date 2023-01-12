@@ -24,6 +24,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns = "/home")
 // tag::AuthenticationMechanism[]
@@ -63,11 +64,28 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         // tag::CallerInRole[]
+        String roles = "";
         if (securityContext.isCallerInRole(Utils.ADMIN)) {
-            response.sendRedirect("/admin.jsf");
+            roles = Utils.ADMIN;
+        }
+        if (securityContext.isCallerInRole(Utils.USER)) {
+            if (!roles.isEmpty()) {
+                roles += ", ";
+            }
+            roles += Utils.USER;
+        }
+        String username = securityContext.getCallerPrincipal().getName();
+
+        UserBean ubean = new UserBean(username, roles);
+        HttpSession session= request.getSession();
+        session.setAttribute("userBean", ubean);
+        System.out.println("adding user bean: " + ubean.getUsername());
+
+        if (securityContext.isCallerInRole(Utils.ADMIN)) {
+            response.sendRedirect("/admin.jsp");
         // end::CallerInRole[]
         } else if  (securityContext.isCallerInRole(Utils.USER)) {
-            response.sendRedirect("/user.jsf");
+            response.sendRedirect("/user.jsp");
         }
     }
     // end::doGet[]

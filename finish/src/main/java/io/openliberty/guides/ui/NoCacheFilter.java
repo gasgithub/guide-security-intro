@@ -22,7 +22,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebFilter(servletNames = { "Faces Servlet" })
+@WebFilter(urlPatterns = { "/home", "/admin.jsp", "user.jsp" })
 public class NoCacheFilter implements Filter {
 
     @Override
